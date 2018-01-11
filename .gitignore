@@ -102,4 +102,7 @@ ENV/
 
 .idea
 
-home_trial.py
+/_build/
+/_static/
+/_templates/
+
