@@ -11,6 +11,13 @@ Welcome to psychometrics's documentation!
    :caption: Contents:
 
 
+API
+===
+
+.. automodule:: psychometrics.CTT
+    :members:
+
+
 
 Indices and tables
 ==================
