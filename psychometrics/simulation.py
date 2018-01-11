@@ -4,6 +4,13 @@ import math
 import random
 import time
 
+'''
+This section is designed to simulate examinees for use in other modules or for any other experimental purpose. 
+It is possible to simulate IRT parameters for items, ability parameters for examinees or response strings (correct/incorrect) 
+for each simulated item for each examinee.
+'''
+
+
 def simulate_items(difficulty={'mean': 0, 'sd': 1}, discrimination={'mean': 1, 'sd': 0}, guessing=None, item_count=50):
     '''
     Simulates item parameters for the one, two and three parameter models. For the one parameter model keep the the

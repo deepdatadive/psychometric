@@ -7,6 +7,11 @@ from psychometrics.simulation import simulate_items, item_vectors
 import random
 import pandas as pd
 
+
+'''
+This module is designed to emulate an adaptive test base don the two parameter logistic model. 
+'''
+
 def _p_2pl(discrimination, ability, difficulty):
     '''
     The probability that this person gets this question correct

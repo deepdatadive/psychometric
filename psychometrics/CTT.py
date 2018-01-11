@@ -5,6 +5,12 @@ import statsmodels
 import random
 from psychometrics.simulation import simulate_items, simulate_people, item_vectors
 
+'''
+This secion is built to implement many commonly used item analysis tools in Classical Test Theory. Included is a method to optain 
+coefficient alpha, p-values for all items, discrimination (point biserials and biserals) values for all items and get examinee raw scores.
+'''
+
+
 
 def examinee_score(items):
     '''
