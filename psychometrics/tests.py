@@ -1,11 +1,11 @@
 import unittest
 import pandas as pd
 import numpy as np
-from .IRT import Irt
-from .simulation import simulate_people, simulate_items, item_vectors
-from .adaptive_test import items_remaining, select_next_item, _p_2pl, L
+from psychometrics.IRT import Irt
+from psychometrics.simulation import simulate_people, simulate_items, item_vectors
+from psychometrics.adaptive_test import items_remaining, select_next_item, _p_2pl, L
 import random
-from .CTT import calculate_alpha, discrimination_index, get_p_values, examinee_score
+from psychometrics.CTT import calculate_alpha, discrimination_index, get_p_values, examinee_score
 
 # class TestIrt(unittest.TestCase):
 #
@@ -217,5 +217,5 @@ class TestCTTMethods(unittest.TestCase):
         examinee_scores = examinee_score(response_vector)
         self.assertEqual(alphas, 0.894933894194553)
         self.assertEqual(p_values.iloc[0, 0], 0.67)
-        self.assertEqual(discrim[0], 0.44019800529488035)
+        self.assertEqual(discrim[0], 0.4401980052948809)
         self.assertEqual(examinee_scores[0], 15)
