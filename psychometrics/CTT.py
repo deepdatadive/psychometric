@@ -3,7 +3,6 @@ import numpy as np
 import os
 import statsmodels
 import random
-from psychometrics.simulation import simulate_items, simulate_people, item_vectors
 
 '''
 This secion is built to implement many commonly used item analysis tools in Classical Test Theory. Included is a method to optain 
