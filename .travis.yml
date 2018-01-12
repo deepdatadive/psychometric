@@ -6,6 +6,7 @@ install:
 script:
   - nosetests
   - coveralls
+  - codecov
   # Use Sphinx to make the html docs
   - make html
   # Tell GitHub not to use jekyll to compile the docs
