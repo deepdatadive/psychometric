@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Welcome to psychometrics’s documentation! &#8212; psychometrics 1 documentation</title>
+    <title>psychometrics &#8212; psychometrics 1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -39,77 +39,45 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-psychometrics-s-documentation">
-<h1>Welcome to psychometrics’s documentation!<a class="headerlink" href="#welcome-to-psychometrics-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="section" id="psychometrics">
+<h1>psychometrics<a class="headerlink" href="#psychometrics" title="Permalink to this headline">¶</a></h1>
+<p>Psychometrics is a python package designed to help users implement both Classical Test Theory and Item Response Theory models and applications within a python framework.</p>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<p>There were very few python packages built in python and I felt it was important to have some packages built as psychometricians begin utilizing python more frequently.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>This package can be installed via pip:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">deepdatadive</span><span class="o">/</span><span class="n">psychometric</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
 </div>
 </div>
-<div class="section" id="module-psychometrics.CTT">
-<span id="api"></span><h1>API<a class="headerlink" href="#module-psychometrics.CTT" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="psychometrics.CTT.calculate_alpha">
-<code class="descclassname">psychometrics.CTT.</code><code class="descname">calculate_alpha</code><span class="sig-paren">(</span><em>items</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/CTT.html#calculate_alpha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.CTT.calculate_alpha" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates coefficient alpha for the given exam.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> – a pandas dataframe with columns for each item and rows for each examinee.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">coefficient alpha</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="psychometrics.CTT.discrimination_index">
-<code class="descclassname">psychometrics.CTT.</code><code class="descname">discrimination_index</code><span class="sig-paren">(</span><em>items</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/CTT.html#discrimination_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.CTT.discrimination_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the point biserial and biserial for each item on the exam. Essentially these are item-total correlations where the item is not included in the total score (point-biserial) and is included int he total score (biserial).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> – a pandas dataframe with columns for each item and rows for each examinee.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">two dataframes. one containing the point-biserials and the other containing the biserials</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="psychometrics.CTT.examinee_score">
-<code class="descclassname">psychometrics.CTT.</code><code class="descname">examinee_score</code><span class="sig-paren">(</span><em>items</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/CTT.html#examinee_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.CTT.examinee_score" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns examinee scores for an exam</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> – a pandas dataframe containing the correct (1) and incorrect (0) response patterns for each examinee on every item.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a vector containing raw scores for the exam.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="psychometrics.CTT.get_p_values">
-<code class="descclassname">psychometrics.CTT.</code><code class="descname">get_p_values</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/CTT.html#get_p_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.CTT.get_p_values" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns p-values for every item in the dataframe</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> – a pandas dataframe where columns are items and rows are examinees.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a vector of p-values for each item in the assessment.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+<div class="section" id="ctt-example">
+<h2>CTT example<a class="headerlink" href="#ctt-example" title="Permalink to this headline">¶</a></h2>
+<p>Lets examine how we could analyze a test using classical test theory. First lets generate some data using the simulation module:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">psychometric.simulation</span> <span class="k">import</span> <span class="n">simulate_items</span><span class="p">,</span> <span class="n">simulate_people</span><span class="p">,</span> <span class="n">response_vector</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">simulate_items</span><span class="p">()</span>
+<span class="n">people</span> <span class="o">=</span> <span class="n">simulate_people</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="n">prob_vector</span><span class="p">,</span> <span class="n">response_vector</span> <span class="o">=</span> <span class="n">item_vectors</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">people</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We now have a pandas dataframe name response_vector that contains correct (1) and incorrect(0) responses for 100 people and 50 items. We can apply specific CTT functions directly to this dataframe.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">psychometrics.CTT</span> <span class="k">import</span> <span class="n">calculate_alpha</span><span class="p">,</span> <span class="n">discrimination_index</span><span class="p">,</span> <span class="n">get_p_values</span><span class="p">,</span> <span class="n">examinee_score</span>
+<span class="c1"># Calculate coefficient alpha</span>
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">calculate_alpha</span><span class="p">(</span><span class="n">response_vector</span><span class="p">)</span>
+<span class="c1"># Calculate p-values for each item</span>
+<span class="n">p_values</span> <span class="o">=</span> <span class="n">get_p_values</span><span class="p">(</span><span class="n">response_vector</span><span class="p">)</span>
+<span class="c1"># Calculate biserial and point biseral values for each item</span>
+<span class="n">discrim</span><span class="p">,</span> <span class="n">discrim2</span> <span class="o">=</span> <span class="n">discrimination_index</span><span class="p">(</span><span class="n">response_vector</span><span class="p">)</span>
+<span class="c1"># Calculate raw scores for each examinee</span>
+<span class="n">examinee_scores</span> <span class="o">=</span> <span class="n">examinee_score</span><span class="p">(</span><span class="n">response_vector</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="module-psychometrics">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-psychometrics" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
