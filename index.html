@@ -76,8 +76,123 @@
 </div>
 </div>
 </div>
-<div class="section" id="module-psychometrics">
-<span id="api"></span><h1>API<a class="headerlink" href="#module-psychometrics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-psychometrics.CTT">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-psychometrics.CTT" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="psychometrics.CTT.calculate_alpha">
+<code class="descclassname">psychometrics.CTT.</code><code class="descname">calculate_alpha</code><span class="sig-paren">(</span><em>items</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/CTT.html#calculate_alpha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.CTT.calculate_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates coefficient alpha for the given exam.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> – a pandas dataframe with columns for each item and rows for each examinee.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">coefficient alpha</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="psychometrics.CTT.discrimination_index">
+<code class="descclassname">psychometrics.CTT.</code><code class="descname">discrimination_index</code><span class="sig-paren">(</span><em>items</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/CTT.html#discrimination_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.CTT.discrimination_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the point biserial and biserial for each item on the exam. Essentially these are item-total correlations where the item is not included in the total score (point-biserial) and is included int he total score (biserial).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> – a pandas dataframe with columns for each item and rows for each examinee.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">two dataframes. one containing the point-biserials and the other containing the biserials</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="psychometrics.CTT.examinee_score">
+<code class="descclassname">psychometrics.CTT.</code><code class="descname">examinee_score</code><span class="sig-paren">(</span><em>items</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/CTT.html#examinee_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.CTT.examinee_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns examinee scores for an exam</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> – a pandas dataframe containing the correct (1) and incorrect (0) response patterns for each examinee on every item.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a vector containing raw scores for the exam.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="psychometrics.CTT.get_p_values">
+<code class="descclassname">psychometrics.CTT.</code><code class="descname">get_p_values</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/CTT.html#get_p_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.CTT.get_p_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns p-values for every item in the dataframe</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> – a pandas dataframe where columns are items and rows are examinees.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a vector of p-values for each item in the assessment.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-psychometrics.simulation"></span><dl class="function">
+<dt id="psychometrics.simulation.get_probabilities">
+<code class="descclassname">psychometrics.simulation.</code><code class="descname">get_probabilities</code><span class="sig-paren">(</span><em>discrimination</em>, <em>ability</em>, <em>difficulty</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/simulation.html#get_probabilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.simulation.get_probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates the probability of a correct response for the 2 parameter model for an item of a given difficult and discrimination for an examinee with ability theta
+:param discrimination: discrimination parameter for item
+:param ability: examinee estimated theta
+:param difficulty: a difficutly parameter for an item
+:return: the probability an examinee with a given ability will get the question correct.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="psychometrics.simulation.item_vectors">
+<code class="descclassname">psychometrics.simulation.</code><code class="descname">item_vectors</code><span class="sig-paren">(</span><em>items</em>, <em>abilities</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/simulation.html#item_vectors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.simulation.item_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>items</strong> – a dictionary (usually from the simulate items function) which contains keys ‘a’, ‘b’, and ‘c’ which are vectors containing the parameters of items.</li>
+<li><strong>abilities</strong> – a list of examinee abilities</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">two dataframes: one containing the probabilities of getting each item correct for each examinee and another containing the correct (1) and incorrect (0) response vectors for each examinee</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="psychometrics.simulation.simulate_items">
+<code class="descclassname">psychometrics.simulation.</code><code class="descname">simulate_items</code><span class="sig-paren">(</span><em>difficulty={'mean': 0</em>, <em>'sd': 1}</em>, <em>discrimination={'mean': 1</em>, <em>'sd': 0}</em>, <em>guessing=None</em>, <em>item_count=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/simulation.html#simulate_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.simulation.simulate_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates item parameters for the one, two and three parameter models. For the one parameter model keep the the
+discrimination sd equal to 0.
+:param difficulty: a dictionary with keys mean and sd
+:param discrimination: a dictionary with keys mean and sd
+:param guessing: a dictionary with keys mean and sd
+:param item_count: an integer for how many items you wish to simulate
+:return: A dictionary with keys ‘a’, ‘b’ and ‘c’ each containing a vector of length equal to item count with the corresponding parameters</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="psychometrics.simulation.simulate_people">
+<code class="descclassname">psychometrics.simulation.</code><code class="descname">simulate_people</code><span class="sig-paren">(</span><em>examinee_count</em>, <em>information</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psychometrics/simulation.html#simulate_people"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psychometrics.simulation.simulate_people" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates theta parameters for examinees sampled from a normal distribution.
+:param examinee_count: how many examinees you wish to simulate
+:param information: dictionary with keys ‘mean’ and ‘sd’ representing the mean and standard deveviation.
+:return: a list of examinee abilities</p>
+</dd></dl>
+
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>

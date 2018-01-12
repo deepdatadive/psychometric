@@ -1,0 +1,180 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>psychometrics.simulation &#8212; psychometrics 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for psychometrics.simulation</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">This section is designed to simulate examinees for use in other modules or for any other experimental purpose. </span>
+<span class="sd">It is possible to simulate IRT parameters for items, ability parameters for examinees or response strings (correct/incorrect) </span>
+<span class="sd">for each simulated item for each examinee.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="simulate_items"><a class="viewcode-back" href="../../index.html#psychometrics.simulation.simulate_items">[docs]</a><span class="k">def</span> <span class="nf">simulate_items</span><span class="p">(</span><span class="n">difficulty</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">discrimination</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="n">guessing</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">item_count</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Simulates item parameters for the one, two and three parameter models. For the one parameter model keep the the</span>
+<span class="sd">    discrimination sd equal to 0.</span>
+<span class="sd">    :param difficulty: a dictionary with keys mean and sd</span>
+<span class="sd">    :param discrimination: a dictionary with keys mean and sd</span>
+<span class="sd">    :param guessing: a dictionary with keys mean and sd</span>
+<span class="sd">    :param item_count: an integer for how many items you wish to simulate</span>
+<span class="sd">    :return: A dictionary with keys &#39;a&#39;, &#39;b&#39; and &#39;c&#39; each containing a vector of length equal to item count with the corresponding parameters</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">difficulty</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span> <span class="n">difficulty</span><span class="p">[</span><span class="s1">&#39;sd&#39;</span><span class="p">],</span> <span class="n">item_count</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">discrimination</span><span class="p">[</span><span class="s1">&#39;sd&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">discrimination</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span> <span class="n">discrimination</span><span class="p">[</span><span class="s1">&#39;sd&#39;</span><span class="p">],</span> <span class="n">item_count</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">discrimination</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]]</span> <span class="o">*</span> <span class="n">item_count</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">guessing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">guessing</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span> <span class="n">guessing</span><span class="p">[</span><span class="s1">&#39;sd&#39;</span><span class="p">],</span> <span class="n">item_count</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">item_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span>
+        <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span>
+        <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="n">c</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">item_dict</span></div>
+
+
+<div class="viewcode-block" id="get_probabilities"><a class="viewcode-back" href="../../index.html#psychometrics.simulation.get_probabilities">[docs]</a><span class="k">def</span> <span class="nf">get_probabilities</span><span class="p">(</span><span class="n">discrimination</span><span class="p">,</span> <span class="n">ability</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Estimates the probability of a correct response for the 2 parameter model for an item of a given difficult and discrimination for an examinee with ability theta</span>
+<span class="sd">    :param discrimination: discrimination parameter for item</span>
+<span class="sd">    :param ability: examinee estimated theta</span>
+<span class="sd">    :param difficulty: a difficutly parameter for an item</span>
+<span class="sd">    :return: the probability an examinee with a given ability will get the question correct.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">probability</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">discrimination</span><span class="o">*</span><span class="p">(</span><span class="n">ability</span><span class="o">-</span><span class="n">difficulty</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">discrimination</span><span class="o">*</span><span class="p">(</span><span class="n">ability</span><span class="o">-</span><span class="n">difficulty</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">probability</span></div>
+
+
+<div class="viewcode-block" id="simulate_people"><a class="viewcode-back" href="../../index.html#psychometrics.simulation.simulate_people">[docs]</a><span class="k">def</span> <span class="nf">simulate_people</span><span class="p">(</span><span class="n">examinee_count</span><span class="p">,</span> <span class="n">information</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Simulates theta parameters for examinees sampled from a normal distribution.</span>
+<span class="sd">    :param examinee_count: how many examinees you wish to simulate</span>
+<span class="sd">    :param information: dictionary with keys &#39;mean&#39; and &#39;sd&#39; representing the mean and standard deveviation.</span>
+<span class="sd">    :return: a list of examinee abilities</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">examinee_abilities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">information</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span> <span class="n">information</span><span class="p">[</span><span class="s1">&#39;sd&#39;</span><span class="p">],</span> <span class="n">examinee_count</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">examinee_abilities</span></div>
+
+
+<div class="viewcode-block" id="item_vectors"><a class="viewcode-back" href="../../index.html#psychometrics.simulation.item_vectors">[docs]</a><span class="k">def</span> <span class="nf">item_vectors</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">abilities</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">    :param items: a dictionary (usually from the simulate items function) which contains keys &#39;a&#39;, &#39;b&#39;, and &#39;c&#39; which are vectors containing the parameters of items.</span>
+<span class="sd">    :param abilities: a list of examinee abilities</span>
+<span class="sd">    :return: two dataframes: one containing the probabilities of getting each item correct for each examinee and another containing the correct (1) and incorrect (0) response vectors for each examinee</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+    <span class="n">list_of_probabilities</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">list_of_correct</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ability</span> <span class="ow">in</span> <span class="n">abilities</span><span class="p">:</span>
+        <span class="n">person_probabilities</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">person_correct</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">items</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">prob</span> <span class="o">=</span> <span class="n">get_probabilities</span><span class="p">(</span><span class="n">discrimination</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="n">difficulty</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">ability</span><span class="o">=</span><span class="n">ability</span><span class="p">)</span>
+            <span class="n">rand_num</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">prob</span> <span class="o">&gt;=</span> <span class="n">rand_num</span><span class="p">:</span>
+                <span class="n">correct</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">person_probabilities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+            <span class="n">person_correct</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="n">list_of_probabilities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">person_probabilities</span><span class="p">)</span>
+        <span class="n">list_of_correct</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">person_correct</span><span class="p">)</span>
+    <span class="n">df_probabilities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">list_of_probabilities</span><span class="p">)</span>
+    <span class="n">df_correct</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">list_of_correct</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df_probabilities</span><span class="p">,</span> <span class="n">df_correct</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Chris Foster.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
