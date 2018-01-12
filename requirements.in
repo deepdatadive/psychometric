@@ -3,3 +3,4 @@ pandas
 pystan
 statsmodels
 sphinx
+coveralls
