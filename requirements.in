@@ -4,3 +4,4 @@ pystan
 statsmodels
 sphinx
 coveralls
+nose
