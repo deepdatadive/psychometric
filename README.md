@@ -6,3 +6,5 @@
 Psychometric is an all inclusive psychometric package designed to manage both CTT and IRT psychometric projects.
 
 Check out the documentation [here](https://deepdatadive.github.io/psychometric/).
+
+Thank you!
