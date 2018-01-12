@@ -47,10 +47,11 @@ We now have a pandas dataframe name response_vector that contains correct (1) an
 API
 ===
 
-.. automodule:: psychometrics
+.. automodule:: psychometrics.CTT
     :members:
 
-
+.. automodule:: psychometrics.simulation
+    :members:
 
 Indices and tables
 ==================
