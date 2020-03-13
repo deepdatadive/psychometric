@@ -3,6 +3,9 @@ from statsmodels.base.model import GenericLikelihoodModel
 from numpy.polynomial.hermite import hermgauss
 from scipy.special import expit
 
+#todo Calibration
+#todo item graphs
+#todo Information Graphs
 
 DEBUG = False
 

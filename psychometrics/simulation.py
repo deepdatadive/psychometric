@@ -139,22 +139,22 @@ def cheating_spreading_plague():
     return True
 
 
-def cheating_pre_knowledge(percent_cheaters=.2, percent_items_comprimised=.5, people_list=[], people=people, item_list=[], items=items, cheating_effect_size=1):
-
-    # Select Cheaters
-    if len(people_list) == 0:
-        cheater_count = int(len(people)*percent_cheaters)
-        cheater_sample = random.sample(range(len(people)), cheater_count)
-
-    else:
-        cheater_sample = people_list
-    items_frame = pd.DataFrame(items)
-    #Get comprimised items
-    if len(item_list) == 0:
-        comprimised_items = items_frame.sample(frac=percent_items_comprimised)
-        comprimised_items_list = comprimised_items.index.tolist()
-    else:
-        comprimised_items_list = item_list
-    prob_cheat, response_cheat = item_vectors_dif(items=items, abilities=people, focal=cheater_sample, item_list=comprimised_items_list, group_difference=cheating_effect_size)
-    print(comprimised_items_list)
-    return prob_cheat, response_cheat, comprimised_items_list
+# def cheating_pre_knowledge(percent_cheaters=.2, percent_items_comprimised=.5, people_list=[], people=people, item_list=[], items=items, cheating_effect_size=1):
+#
+#     # Select Cheaters
+#     if len(people_list) == 0:
+#         cheater_count = int(len(people)*percent_cheaters)
+#         cheater_sample = random.sample(range(len(people)), cheater_count)
+#
+#     else:
+#         cheater_sample = people_list
+#     items_frame = pd.DataFrame(items)
+#     #Get comprimised items
+#     if len(item_list) == 0:
+#         comprimised_items = items_frame.sample(frac=percent_items_comprimised)
+#         comprimised_items_list = comprimised_items.index.tolist()
+#     else:
+#         comprimised_items_list = item_list
+#     prob_cheat, response_cheat = item_vectors_dif(items=items, abilities=people, focal=cheater_sample, item_list=comprimised_items_list, group_difference=cheating_effect_size)
+#     print(comprimised_items_list)
+#     return prob_cheat, response_cheat, comprimised_items_list

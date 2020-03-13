@@ -1,3 +1,4 @@
+from __future__ import print_function, division, unicode_literals
 import numpy as np
 import operator
 import functools
@@ -7,6 +8,9 @@ from psychometrics.simulation import simulate_items, item_vectors
 import random
 import pandas as pd
 
+#todo 1, 2, 3 parmeter
+#todo multistage
+#todo adaptive content balancing
 
 '''
 This module is designed to emulate an adaptive test base don the two parameter logistic model. 

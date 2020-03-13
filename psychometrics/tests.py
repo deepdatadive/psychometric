@@ -5,7 +5,9 @@ from psychometrics.IRT import Irt
 from psychometrics.simulation import simulate_people, simulate_items, item_vectors
 from psychometrics.adaptive_test import items_remaining, select_next_item, _p_2pl, L
 import random
-from psychometrics.CTT import calculate_alpha, discrimination_index, get_p_values, examinee_score
+from psychometrics.reliability import calculate_alpha
+from psychometrics.item_analysis import discrimination_index, get_p_values
+from psychometrics.test_info import examinee_score
 
 # class TestIrt(unittest.TestCase):
 #
