@@ -83,9 +83,9 @@ def item_vectors(items, abilities):
             prob = get_probabilities(discrimination=row['a'], difficulty=row['b'], ability=ability)
             rand_num = random.uniform(0, 1)
             if prob >= rand_num:
-                correct = 1
-            else:
                 correct = 0
+            else:
+                correct = 1
             person_probabilities.append(prob)
             person_correct.append(correct)
         list_of_probabilities.append(person_probabilities)

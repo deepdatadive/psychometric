@@ -2,13 +2,33 @@ import numpy as np
 from statsmodels.base.model import GenericLikelihoodModel
 from numpy.polynomial.hermite import hermgauss
 from scipy.special import expit
+import math
+import pandas as pd
+import seaborn as sns; sns.set()
+import matplotlib.pyplot as plt
 
 #todo Calibration
-#todo item graphs
 #todo Information Graphs
 
 DEBUG = False
 
+
+# Plot 2pl
+
+def plot_2pl(discrimination, difficulty):
+    abilities_list = np.arange(-3, 3, 0.1).tolist()
+    probabilities_list = []
+    for ability in abilities_list:
+        probability = math.exp(discrimination*(ability-difficulty))/(1+math.exp(discrimination*(ability-difficulty)))
+        probabilities_list.append(probability)
+    df_dict = {'abilities': abilities_list,
+               'probabilities': probabilities_list}
+    df = pd.DataFrame(df_dict)
+    print(df)
+    ax = sns.lineplot(x="abilities", y="probabilities", data=df)
+    plt.show()
+
+plot_2pl(1, 1)
 
 class Irt(GenericLikelihoodModel):
     '''
