@@ -3,13 +3,13 @@ from scipy.stats import chi2_contingency
 
 #todo DIF approaches - , logistic regression, IRT
 
-df = pd.read_csv('/home/cfoster/Documents/dif_CTT.csv')
+
 
 def mantel_hanzel_dif(items, response_column='response', refrence_column='group'):
-    items = df['item'].unique().tolist()
+    items = items['item'].unique().tolist()
     dict_list = []
     for item in items:
-        df_item = df[df['item']==item]
+        df_item = items[items['item']==item]
         crosstab = pd.crosstab(df_item[response_column], df_item[refrence_column])
         chi2, p, dof, ex = chi2_contingency(crosstab)
 

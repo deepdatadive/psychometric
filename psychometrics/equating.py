@@ -11,7 +11,7 @@ import numpy as np
 #
 # todo: IRT - Fixed Ancor
 # todo: IRT - Conversion Equating
-#todo concurrent IRT
+# todo concurrent IRT
 
 def mean_equating(initial_data, subsequent_data, sd_equating=False):
     test1_info = test_descriptives(initial_data)

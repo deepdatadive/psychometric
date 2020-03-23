@@ -24,9 +24,9 @@ def plot_2pl(discrimination, difficulty):
     df_dict = {'abilities': abilities_list,
                'probabilities': probabilities_list}
     df = pd.DataFrame(df_dict)
-    print(df)
     ax = sns.lineplot(x="abilities", y="probabilities", data=df)
-    plt.show()
+    #plt.show()
+    return(ax)
 
 plot_2pl(1, 1)
 

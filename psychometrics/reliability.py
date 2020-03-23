@@ -3,6 +3,7 @@ from psychometrics.CTT import examinee_score
 import math
 import numpy as np
 from scipy.stats.stats import pearsonr
+from psychometrics.simulation import simulate_items, simulate_people, item_vectors
 
 def k_and_k(items):
     item_count = items.shape[1]
@@ -63,7 +64,14 @@ def calculate_sem(items, reliability=None):
         reliability = calculate_alpha(items)
     total_scores = examinee_score(items)
     std = np.array(total_scores)
+    std = np.std(std)
     return std*math.sqrt(1-reliability)
+
+items = simulate_items()
+people = simulate_people(100, {'mean': 0, 'sd': 1})
+prob_vector, response_vector = item_vectors(items, people)
+
+print(calculate_sem(response_vector))
 
 #todo Calculate SEM using IRT item stats
 

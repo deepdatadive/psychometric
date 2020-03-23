@@ -5,15 +5,6 @@ import numpy as np
 random.seed(123)
 np.random.seed(123)
 
-def examinee_score(items):
-    '''
-    Returns examinee scores for an exam
-
-    :param items: a pandas dataframe containing the correct (1) and incorrect (0) response patterns for each examinee on every item.
-    :return: a vector containing raw scores for the exam.
-    '''
-    return items.sum(axis=1)
-
 def test_descriptives(items):
     test_scores = items.sum(axis=1)
     test_info = {'min_score': test_scores.min(),

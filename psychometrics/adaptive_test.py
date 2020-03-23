@@ -99,7 +99,7 @@ def select_next_item(items, theta, model='1PL'):
     elif model == '3PL':
         b = np.array(items.ix[:, 1])
         c = np.array(items.ix[:, 2])
-        current_probabilities = _p_3pl(a, theta, b)
+        current_probabilities = _p_3pl(a, theta, b, c)
 
     items['probability'] = current_probabilities
     items['closest_prob'] = list(abs(.5 - current_probabilities))
