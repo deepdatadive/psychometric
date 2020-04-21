@@ -1,6 +1,14 @@
 import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-#todo compare blocks of text
+
+
+
+def text_block_match(corpus):
+    vect = TfidfVectorizer(min_df=1, stop_words="english")
+    tfidf = vect.fit_transform(corpus)
+    return tfidf * tfidf.T
+
 
 
 def short_answer_match(str1, str2, ratio_calc=True):

@@ -106,3 +106,4 @@ ENV/
 /_static/
 /_templates/
 
+/psychometrics/stuff.py

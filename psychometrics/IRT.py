@@ -15,20 +15,26 @@ DEBUG = False
 
 # Plot 2pl
 
-def plot_2pl(discrimination, difficulty):
-    abilities_list = np.arange(-3, 3, 0.1).tolist()
+def plot_irt(difficulty, discrimination=False, guessing=False):
+    abilities_list = np.arange(-4, 4, 0.1).tolist()
     probabilities_list = []
+
     for ability in abilities_list:
-        probability = math.exp(discrimination*(ability-difficulty))/(1+math.exp(discrimination*(ability-difficulty)))
+        if discrimination == False:
+            discrimination = 1
+            probability = math.exp(1.7*discrimination*(ability-difficulty))/(1+math.exp(1.7*discrimination*(ability-difficulty)))
+        else:
+            if guessing == False:
+                probability = math.exp(discrimination * (ability - difficulty)) / (1 + math.exp(discrimination * (ability - difficulty)))
+            elif guessing:
+                probability = guessing + (1-guessing)*(math.exp(discrimination * (ability - difficulty)) / (1 + math.exp(discrimination * (ability - difficulty))))
         probabilities_list.append(probability)
     df_dict = {'abilities': abilities_list,
                'probabilities': probabilities_list}
     df = pd.DataFrame(df_dict)
     ax = sns.lineplot(x="abilities", y="probabilities", data=df)
-    #plt.show()
-    return(ax)
 
-plot_2pl(1, 1)
+    return(ax)
 
 class Irt(GenericLikelihoodModel):
     '''
