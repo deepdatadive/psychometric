@@ -1,7 +1,17 @@
 import pandas as pd
 import random
 
-#todo Blueprint match
+
+def test_coverage(blueprint, actual):
+    content_areas = blueprint.keys()
+    return_dict = {}
+    for content_area in content_areas:
+        necessary_amount = blueprint[content_area]
+        allocated_amount = actual[content_area]
+        percent_coverage = float(allocated_amount) / float(necessary_amount) * 100
+        return_dict[content_area] = percent_coverage
+    return return_dict
+
 
 def build_parallel_forms(blueprint, items, forms_to_build):
 
