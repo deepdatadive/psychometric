@@ -1,10 +1,30 @@
 import pandas as pd
 from psychometrics.CTT import examinee_score
 from psychometrics.reliability import k_and_k, item_var_sum, total_var
+
+
 #todo DOMC
-#todo Distractor Analysis
-#todo Latency analysis
 #todo identify poorly performing items
+
+def latency_analysis(data, item_id='item_id',latency='latency'):
+    latencies = data.groupby(item_id)[latency].mean()
+    return latencies
+
+def distractor_analysis(data, distractor_correct='distractor_correct', total_score='total_score'):
+
+    distractor_data = []
+    for item in data['item_id'].unique():
+        df_item = data[data['item_id'] == item]
+        distractor_list = df_item['distractor_id'].unique()
+        for distractor in distractor_list:
+            new_data = {'item_id': item,
+                        'distractor_id': distractor}
+            df_distractor = df_item[df_item['distractor_id'] == distractor]
+            correlation = df_distractor[distractor_correct].corr(df_distractor[total_score])
+            new_data['correlation'] = correlation
+            distractor_data.append(new_data)
+    df_distractor_data = pd.DataFrame(distractor_data)
+    return df_distractor_data
 
 def get_p_values(data):
     '''
@@ -42,3 +62,8 @@ def discrimination_index(items):
         total = examinee_score(items)
         stat_with_item.ix[item] = items[item].corr(total)
     return stat_without_item, stat_with_item
+
+df = pd.read_csv('/home/cfoster/PycharmProjects/psychometric/data/distractor_analysis.csv')
+
+returned = latency_analysis(df)
+print(returned)
