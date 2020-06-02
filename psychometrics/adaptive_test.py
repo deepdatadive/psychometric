@@ -8,12 +8,14 @@ from psychometrics.simulation import simulate_items, item_vectors
 import random
 import pandas as pd
 
-#todo multistage
 #todo adaptive content balancing
 
 '''
 This module is designed to emulate an adaptive test based on a one, two or three parameter logistic model. 
 '''
+
+
+
 
 def _p_1pl(ability, difficulty, discrimination=1, rasch=False):
     '''
@@ -40,7 +42,7 @@ def _p_2pl(discrimination, ability, difficulty):
     xb = discrimination*(ability-difficulty)
     return np.exp(xb) / (1 + np.exp(xb))
 
-def _p_3pl(discrimination, ability, difficulty, guessing):
+def _p_3pl(ability, discrimination, difficulty, guessing):
     '''
     The probability that this person gets this question correct
     alpha = discrimination of the test
@@ -75,4 +77,86 @@ def select_next_item(items, theta, model='1PL'):
     return items, next_item
 
 
+def _f(ys, alpha, theta, betas):
+    '''
+    The probability of observing this person's responses (ys) given
+    the discrimination of the test, the person's ability, and the
+    difficulty of the questions.
+    '''
+    ps = _p_2pl(alpha, theta, betas)
+    qs = 1 - ps
+    return np.prod(np.power(ps, ys) * np.power(qs, 1 - ys))
 
+
+def get_probabilities(discrimination, ability, difficulty):
+    probability = math.exp(discrimination*(ability-difficulty))/(1+math.exp(discrimination*(ability-difficulty)))
+    return probability
+
+
+def L(ys, alpha, betas):
+    '''
+    How likely are we to see these responses (ys) given the
+    discrimination of the test and the difficulty of the
+    questions. Note, we integrate over all person abilities so it's as
+    if a random person from the population took the test.
+    '''
+    possible_abilities = list(np.arange(-4, 4, .01))
+    def f(x):
+        return _f(ys=ys, alpha=alpha, theta=x, betas=betas)
+    y = [f(x) for x in possible_abilities]
+    max_value = y.index(max(y))
+    return max_value, possible_abilities[max_value]
+
+def multistage_adaptive(stage, level, items, results):
+
+
+    def Average(lst):
+        return sum(lst) / len(lst)
+
+    next_stage = stage + 1
+    current_stage_items = items[(items['stage'] == stage) & (items['level']==level)]
+    next_stage_items = items[(items['stage'] == next_stage)]
+    levels_in_next_stage = next_stage_items.level.unique().tolist()
+    max_prob, theta_estimate = L(np.array(results), np.array(current_stage_items['a']), np.array(current_stage_items['b']))
+    probability_next_levels = []
+    for next_level in levels_in_next_stage:
+        new_list = []
+        next_stage_level_items = next_stage_items[next_stage_items['level'] == next_level]
+        for index, row in next_stage_level_items.iterrows():
+            probability = _p_2pl(row['a'], theta_estimate, row['b'])
+            new_list.append(abs(.5 - probability))
+        probability_next_levels.append(Average(new_list))
+
+    next_level = probability_next_levels.index(min(probability_next_levels)) + 1
+
+    return next_stage, next_level
+
+
+
+
+
+df = pd.read_csv('/home/cfoster/PycharmProjects/psychometric/data/multistage_setup.csv')
+
+next_stage, next_level = multistage_adaptive(stage=1, level=1, items=df, results=[0,1,1])
+#
+# item_list = [{
+#     'a':.5,
+#     'b':1.5,
+#     'c':.25
+# }, {
+#     'a':1,
+#     'b':0,
+#     'c':.2
+# }, {
+#     'a':1.5,
+#     'b':-1,
+#     'c':.25
+# }]
+#
+#
+#
+#
+# max_prob, theta_estimate = L(np.array([ 1, 1, 1, 1, 0]), np.array([.5, .6, .7, .8, .9]),
+#                              np.array([-3, -2, 0, 2, 3]))
+#
+# print(max_prob, theta_estimate)
