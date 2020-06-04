@@ -7,6 +7,8 @@ from numpy.polynomial.hermite import hermgauss
 from psychometrics.simulation import simulate_items, item_vectors
 import random
 import pandas as pd
+import seaborn as sns; sns.set()
+import matplotlib.pyplot as plt
 
 #todo adaptive content balancing
 
@@ -107,6 +109,21 @@ def L(ys, alpha, betas):
     max_value = y.index(max(y))
     return max_value, possible_abilities[max_value]
 
+
+def _2pl_information(alpha, beta):
+
+    possible_abilities = list(np.arange(-4, 4, .01))
+    def f(x):
+        return _p_2pl(discrimination=alpha, ability=x, difficulty=beta)
+    ps = [f(x) for x in possible_abilities]
+    qs = [1-p for p in ps]
+
+    ps_qs = np.multiply(np.array(ps),np.array(qs))
+    y = alpha*alpha*np.array(ps_qs)
+    info_dict = {'information': y,
+                 'quad': possible_abilities}
+    return info_dict
+
 def multistage_adaptive(stage, level, items, results):
 
 
@@ -132,12 +149,14 @@ def multistage_adaptive(stage, level, items, results):
     return next_stage, next_level
 
 
+info_df = _2pl_information(1, -1)
+df = pd.DataFrame(info_df)
 
-
-
-df = pd.read_csv('/home/cfoster/PycharmProjects/psychometric/data/multistage_setup.csv')
-
-next_stage, next_level = multistage_adaptive(stage=1, level=1, items=df, results=[0,1,1])
+# ax = sns.lineplot(x="quad", y="information", data=df)
+# plt.show()
+# df = pd.read_csv('/home/cfoster/PycharmProjects/psychometric/data/multistage_setup.csv')
+#
+# next_stage, next_level = multistage_adaptive(stage=1, level=1, items=df, results=[0,1,1])
 #
 # item_list = [{
 #     'a':.5,
