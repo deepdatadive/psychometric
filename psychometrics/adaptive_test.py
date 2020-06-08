@@ -16,9 +16,6 @@ import matplotlib.pyplot as plt
 This module is designed to emulate an adaptive test based on a one, two or three parameter logistic model. 
 '''
 
-
-
-
 def _p_1pl(ability, difficulty, discrimination=1, rasch=False):
     '''
     The probability that this person gets this question correct
@@ -125,8 +122,6 @@ def _2pl_information(alpha, beta):
     return info_dict
 
 def multistage_adaptive(stage, level, items, results):
-
-
     def Average(lst):
         return sum(lst) / len(lst)
 
@@ -152,8 +147,9 @@ def multistage_adaptive(stage, level, items, results):
 info_df = _2pl_information(1, -1)
 df = pd.DataFrame(info_df)
 
-# ax = sns.lineplot(x="quad", y="information", data=df)
-# plt.show()
+ax = sns.lineplot(x="quad", y="information", data=df)
+plt.show()
+
 # df = pd.read_csv('/home/cfoster/PycharmProjects/psychometric/data/multistage_setup.csv')
 #
 # next_stage, next_level = multistage_adaptive(stage=1, level=1, items=df, results=[0,1,1])
