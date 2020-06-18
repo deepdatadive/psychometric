@@ -45,6 +45,6 @@ def logistic_regression_dif(items, response_column='response', refrence_column='
     logit_df = pd.DataFrame(dict_list)
     return logit_df
 
-df = pd.read_csv('/home/cfoster/Documents/dif_CTT.csv')
-result = logistic_regression_dif(df)
-print(result)
+# df = pd.read_csv('/home/cfoster/Documents/dif_CTT.csv')
+# result = logistic_regression_dif(df)
+# print(result)

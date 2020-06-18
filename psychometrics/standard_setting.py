@@ -1,7 +1,12 @@
 import pandas as pd
 import seaborn as sns; sns.set()
 import matplotlib.pyplot as plt
-
+from statsmodels.stats.anova import anova_lm
+from statsmodels.graphics.factorplots import interaction_plot
+import matplotlib.pyplot as plt
+from scipy import stats
+from statsmodels.formula.api import ols
+from statsmodels.stats.anova import anova_lm
 
 def angoff_rating(ratings):
     rater_average = ratings.mean(axis=1)
@@ -37,10 +42,15 @@ def iit(ratings, raters_column='rater', item_column='item', group_column='group'
         rater_graph = sns.lineplot(x=item_column, y=rating_column, hue=group_column, palette='bright', data=rater_df)
         plt.show()
 
+    formula = 'rating ~ C(group) + C(item) + C(group):C(item)'
+    model = ols(formula, ratings).fit()
+    aov_table = anova_lm(model, typ=2)
+    return aov_table
 
 
 
-# df = pd.read_csv('/home/cfoster/Documents/contrasting_groups.csv')
+df = pd.read_csv('/home/cfoster/Documents/iit.csv')
 # contrasting_groups(df)
-# # plt = iit(df)
+plt = iit(df)
+print(plt)
 # plt.show()

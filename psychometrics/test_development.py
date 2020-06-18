@@ -13,7 +13,7 @@ def test_coverage(blueprint, actual):
     return return_dict
 
 
-def build_parallel_forms(blueprint, items, forms_to_build):
+def build_parallel_forms(blueprint, items, forms_to_build, overlap=None, type='count'):
 
     content_areas = blueprint.keys()
     sorted_list = sorted(items, key=lambda i: i['difficulty'])
@@ -21,8 +21,6 @@ def build_parallel_forms(blueprint, items, forms_to_build):
     empty_dict = {}
     for form in form_count:
         empty_dict['form' + str(form)]=[]
-
-
     items_for_forms = []
     for content_area in content_areas:
         items_from_area = blueprint[content_area]

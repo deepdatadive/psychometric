@@ -15,14 +15,14 @@ DEBUG = False
 
 # Plot 2pl
 
-def plot_irt(difficulty, discrimination=False, guessing=False):
+def plot_irt(difficulty, discrimination=False, guessing=False, scaling=1.7):
     abilities_list = np.arange(-4, 4, 0.1).tolist()
     probabilities_list = []
 
     for ability in abilities_list:
         if discrimination == False:
             discrimination = 1
-            probability = math.exp(1.7*discrimination*(ability-difficulty))/(1+math.exp(1.7*discrimination*(ability-difficulty)))
+            probability = math.exp(scaling*discrimination*(ability-difficulty))/(1+math.exp(scaling*discrimination*(ability-difficulty)))
         else:
             if guessing == False:
                 probability = math.exp(discrimination * (ability - difficulty)) / (1 + math.exp(discrimination * (ability - difficulty)))

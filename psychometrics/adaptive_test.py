@@ -59,15 +59,15 @@ def items_remaining(data, items_taken):
 
 
 def select_next_item(items, theta, model='1PL'):
-    a = np.array(items.ix[:, 0])
+    a = np.array(items.iloc[:, 0])
     current_probabilities = _p_1pl(a, theta)
     if model == '2PL':
-        b = np.array(items.ix[:, 1])
+        b = np.array(items.iloc[:, 1])
         current_probabilities = _p_2pl(a, theta, b)
 
     elif model == '3PL':
-        b = np.array(items.ix[:, 1])
-        c = np.array(items.ix[:, 2])
+        b = np.array(items.iloc[:, 1])
+        c = np.array(items.iloc[:, 2])
         current_probabilities = _p_3pl(a, theta, b, c)
 
     items['probability'] = current_probabilities
@@ -144,11 +144,7 @@ def multistage_adaptive(stage, level, items, results):
     return next_stage, next_level
 
 
-info_df = _2pl_information(1, -1)
-df = pd.DataFrame(info_df)
 
-ax = sns.lineplot(x="quad", y="information", data=df)
-plt.show()
 
 # df = pd.read_csv('/home/cfoster/PycharmProjects/psychometric/data/multistage_setup.csv')
 #
