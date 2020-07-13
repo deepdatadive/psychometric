@@ -8,12 +8,6 @@ import seaborn as sns; sns.set()
 import matplotlib.pyplot as plt
 
 #todo Calibration
-#todo Information Graphs
-
-DEBUG = False
-
-
-# Plot 2pl
 
 def plot_irt(difficulty, discrimination=False, guessing=False, scaling=1.7):
     abilities_list = np.arange(-4, 4, 0.1).tolist()

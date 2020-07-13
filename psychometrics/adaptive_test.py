@@ -107,11 +107,21 @@ def L(ys, alpha, betas):
     return max_value, possible_abilities[max_value]
 
 
-def _2pl_information(alpha, beta):
+def item_information(alpha, beta, guessing, model='2PL'):
 
     possible_abilities = list(np.arange(-4, 4, .01))
-    def f(x):
-        return _p_2pl(discrimination=alpha, ability=x, difficulty=beta)
+
+    if model == '1PL':
+        def f(x):
+            return _p_1pl(ability=x, difficulty=beta, discrimination=1, rasch=False)
+    elif model == '2PL':
+        def f(x):
+            return _p_2pl(discrimination=alpha, ability=x, difficulty=beta)
+    else:
+        def f(x):
+            return _p_3pl(ability=x, discrimination=alpha, difficulty=beta, guessing=guessing)
+
+
     ps = [f(x) for x in possible_abilities]
     qs = [1-p for p in ps]
 
