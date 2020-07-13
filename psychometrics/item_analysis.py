@@ -10,7 +10,7 @@ def latency_analysis(data, item_id='item_id',latency='latency'):
     latencies = data.groupby(item_id)[latency].mean()
     return latencies
 
-def distractor_analysis(data, distractor_correct='distractor_correct', total_score='total_score'):
+def option_analysis(data, distractor_correct='distractor_correct', total_score='total_score'):
 
     distractor_data = []
     for item in data['item_id'].unique():
